@@ -1,12 +1,10 @@
 # sorting-of-numbers
 ## Aim
 To write and execute an Assembly Language Program for sorting data in Ascending and  descending order using 8051 microcontroller on Keil software.
----
 
 ## Apparatus Required
 - Personal Computer  
 - Keil µVision software  
----
 
 ## Algorithm(ASCENDING ORDER)
 1. Initialize the register **R7** with count (number of elements).  
@@ -18,21 +16,47 @@ To write and execute an Assembly Language Program for sorting data in Ascending 
 5. Increment pointer and decrement **R7**.  
 6. If **R7 ≠ 0**, repeat from Step 2.  
 7. Otherwise, stop the program.  
----
 
 ## Program (Ascending order)
 
 ```asm
+ORG 0000H
 
+MOV R4,#04H        ; Number of passes
 
+OUTER: MOV R3,#04H ; Inner loop counter
+       MOV R0,#50H ; Starting address
 
+INNER: MOV A,@R0   ; Get first element
+       MOV B,A
 
+       INC R0      ; Next element
+
+       CLR C
+       SUBB A,@R0  ; Compare two elements
+
+       JNC NO_SWAP ; If first > second, no swap
+
+       ; Swap elements
+
+       MOV A,@R0
+       XCH A,B
+       MOV @R0,A
+
+       DEC R0
+       MOV A,B
+       MOV @R0,A
+
+       INC R0
+
+NO_SWAP:
+       DJNZ R3,INNER
+       DJNZ R4,OUTER
+
+END
 ```
 ## OUTPUT(Ascending order)
-
-
-
----
+<img width="774" height="261" alt="ascending_order" src="https://github.com/user-attachments/assets/ca531f41-faa7-49b7-be0b-ca326f68cd31" />
 
 ## Algorithm(Descending order)
 1. Initialize the register **R7** with count.  
@@ -45,20 +69,36 @@ To write and execute an Assembly Language Program for sorting data in Ascending 
 6. Check if **R7 = 0**:  
    - If **No**, repeat the process from Step 2.  
    - If **Yes**, stop the program.  
----
+
 ## Program (Descending order)
 
 ```asm
-
-
-
-
+ORG 0000H
+MOV R4, #04H ；Number of passes (N-1)
+OUTER: MOV R3, #04H ； Inner 1oop counter
+MOV R0,#50H ；Array starting address
+INNER: MOV A, @R0
+MOV B, A
+INC R0
+CLR C
+SUBB A,@R0 ； Compare adjacent elements
+JC NO_SWAP ;If A< @RO (Carry), no swap
+；Exchange elements
+MOV A, @R0
+ХСН А, В
+MOV @R0, A 
+DEC RO 
+MOV A, B 
+XСH A, B 
+MOV @R0,A 
+INC R0
+NO_SWAP: DJNZ R3, INNER
+DJNZ R4, OUTER
+END
 ```
 ## OUTPUT(Descending order)
+<img width="928" height="171" alt="Screenshot 2026-07-29 141944(1)" src="https://github.com/user-attachments/assets/514a1896-d06b-4f6b-922c-231af4d99373" />
+<img width="936" height="166" alt="Screenshot 2026-07-29 142003(1)" src="https://github.com/user-attachments/assets/611105cd-0a46-4e70-b4c0-e13b77d0784d" />
 
-
-
----
 ## RESULT:
 Thus the sorting of given data was done using 8051 keil software.
-
